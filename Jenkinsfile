@@ -16,13 +16,30 @@ pipeline {
           }
         }
 
+        stage('Test Log') {
+          steps {
+            writeFile(file: 'Test.txt', text: 'This is testing file')
+          }
+        }
+
       }
     }
 
     stage('Deploy') {
-      steps {
-        input(message: 'Do you want to deploy?', id: 'Ok')
-        echo 'Deploying App to Host'
+      parallel {
+        stage('Deploy') {
+          steps {
+            input(message: 'Do you want to deploy?', id: 'Ok')
+            echo 'Deploying App to Host'
+          }
+        }
+
+        stage('Artifact') {
+          steps {
+            archiveArtifacts 'Test.txt'
+          }
+        }
+
       }
     }
 
