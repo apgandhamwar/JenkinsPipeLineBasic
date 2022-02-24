@@ -17,10 +17,9 @@ pipeline {
         }
 
         stage('Test Log') {
-          environment
-           {
-             LocalVar = "Hello All"
-           }
+          environment {
+            LocalVar = 'Hello All'
+          }
           steps {
             writeFile(file: 'Test.txt', text: " ${LocalVar} This is testing file")
           }
@@ -33,7 +32,7 @@ pipeline {
       parallel {
         stage('Deploy') {
           steps {
-            input(message: 'Do you want to deploy?', id: 'Ok')
+            input(message: 'Do you want to Deploy?', id: 'Ok')
             echo 'Deploying App to Host'
           }
         }
